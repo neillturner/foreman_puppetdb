@@ -1,0 +1,10 @@
+name    'neillturner-foreman_puppetdb'
+version '0.0.1'
+source 'git://github.com/neillturner/foreman_puppetdb.git'
+author 'neillturner'
+license 'Apache License, Version 2.0'
+summary 'Foreman with Puppetdb'
+description 'Installs Foreman, Puppet, Puppetdb with stored configs on Centos/Redhat'
+project_page 'http://forge.puppetlabs.com/neillturner/foreman_puppetdb'
+
+dependency 'puppetlabs/puppetdb', '>= 3.0.0'

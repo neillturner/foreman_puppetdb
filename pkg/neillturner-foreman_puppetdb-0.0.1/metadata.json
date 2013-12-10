@@ -1,0 +1,31 @@
+{
+  "summary": "Foreman with Puppetdb",
+  "source": "git://github.com/neillturner/foreman_puppetdb.git",
+  "name": "neillturner-foreman_puppetdb",
+  "version": "0.0.1",
+  "dependencies": [
+    {
+      "version_requirement": ">= 3.0.0",
+      "name": "puppetlabs/puppetdb"
+    }
+  ],
+  "types": [
+
+  ],
+  "license": "Apache License, Version 2.0",
+  "project_page": "http://forge.puppetlabs.com/neillturner/foreman_puppetdb",
+  "description": "Installs Foreman, Puppet, Puppetdb with stored configs on Centos/Redhat",
+  "checksums": {
+    "manifests/install.pp": "605aa652f820ad470197595b07176a8a",
+    "manifests/prereqs.pp": "162d8bacabe75c07583f7a22154bd97e",
+    "files/routes.yaml": "51fa3868f5e2c112b04890843a5d9747",
+    "README": "2fe1faa7eb3983f0e208087d28dc1c0d",
+    "manifests/init.pp": "d0bb46d042f2175c84bf10313dd8f3b5",
+    "manifests/puppet_database.pp": "b13097476074b76b88057c510d8807ef",
+    "templates/puppetdb.conf.erb": "6510047c46294427075e98d516fe832f",
+    "Modulefile": "4f927e3b2f5e729342371592b584aed3",
+    "files/clean.sh": "f0d363286a672bcda2d8d8bba2acdaf9",
+    "spec/spec_helper.rb": "a55d1e6483344f8ec6963fcb2c220372"
+  },
+  "author": "neillturner"
+}

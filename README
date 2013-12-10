@@ -1,0 +1,59 @@
+foreman_puppetdb
+----------------
+This is the foreman_puppetdb module. This is a complex and brittle install of Foreman, Puppet, and Puppetdb.
+
+This is very centos/redhat specific and a very much a first version. 
+
+The idea is to quickly bring up a foreman, puppet, puppetdb configured to use stored configs on one server, puppetmaster.example.com, suitable for production use. 
+
+It uses apache and passenger instead of the internal puppet webbrick webserver as this scales better for production.
+Configurations are stored in puppetdb so that dynamic configuration of Nagios can be done.   
+
+The module assumes you have:
+1. Installed puppet version 3: 
+ rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
+ yum install puppet
+2. Set Security Enhanced Linux to disabled.
+3 Installed httpd 
+   yum install httpd  
+
+Use puppet apply to install the module.
+
+1. Installs various pre-requisities. 
+2. Installs Foreman, postgresql, puppetmaster, and passenger using the foreman install 
+   as per Foreman quickstart http://theforeman.org/manuals/1.3/quickstart_guide.html.  
+3. Install passenger and configures it to run puppet under the apache httpd server.
+4. Installs puppetdb to run under postgresql. 
+5. Finally need to test 
+    a. On a client 
+              yum install puppet
+               puppet agent -t --server=puppetmaster.example.com  --environment=production --logdest /var/log/puppet/agent.log -v -d 
+    b. Sign Certificate
+              Go to Foreman https://puppetmaster.example.com logon as admin pw change me. 
+    	      Go to More > Configuration > Smart Proxies	 and click certificates for puppetmaster-example-com
+ 		     Click sign for client.
+    c. Back on client run again at it will work
+             puppet agent -t --server=puppetmaster.example.com  --environment=production --logdest /var/log/puppet/agent.log -v -d   
+			 
+
+RERUNNING
+---------			 
+ Unfortunatelty the foreman-installer does not seem to be idempotent so to rerun the install			 
+      1. On the puppermaster.example.com first to run the /root/clean.sh script to create a clean server to re-install. 
+      2. On the test client run the following to clean and reinstall puppet: 
+	         yum remove puppet
+             rm -rf /etc/puppet  			 
+			 rm -rf /var/lib/puppet  (so the SSL certificate will be recreated).
+             yum install puppet 
+
+DEBUGGING
+--------- 			 
+1. The Puppetdb can be accesses via: 
+   psql -h puppetmaster.example.com -U puppetdb -W puppetdb
+   password: puppetdb 
+2. You can check the configurations via: 
+    puppet agent --server=puppetmaster.example.com  --environment=production --configprint all| egrep "dbadapter|storeconfig"
+	
+	
+   
+
